@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block body_block %}
+
+<div class="jumbotron">
+	<h1>{{todo}}</h1>
+	{% if todo.status == 'Activate' %}
+	<a class="btn btn-success" href="{% url 'todo_done' pk=todo.pk %}">Done</a>
+	{% else %}
+	<a class="btn btn-warning" href="{% url 'todo_activate' pk=todo.pk %}">Activate</a>
+	{% endif %}
+	<a class="btn btn-warning" href="{% url 'todo_delete' pk=todo.pk %}">Delete</a>
+</div>
+
+{% endblock %}

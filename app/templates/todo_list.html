@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block body_block %}
+	{% if todo_list %}
+	<table class="table">
+		<thead>
+			<th>Todo</th>
+			<th></th>
+		</thead>
+		<tbody>
+			{% for todo in todo_list %}
+				<tr class="{% if todo.status == 'Activate' %} active {% else %} success {% endif %}">
+					<td>{{todo}}</td>
+					<td>{{todo.get_status_display}}</td>
+					<td>
+						<a class="btn btn-danger" href="{% url 'todo_delete' pk=todo.pk %}">
+							<span class="glyphicon glyphicon-remove"></span>
+						</a>
+						<a class="btn btn-info" href="{% url 'todo_edit' pk=todo.pk %}">
+							<span class="glyphicon glyphicon-pencil"></span>
+						</a>
+						{% if todo.status == 'Activate' %}
+						<a class="btn btn-info" href="{% url 'todo_done' pk=todo.pk %}">
+							<span class="glyphicon glyphicon-thumbs-up"></span>
+						</a>
+						{% else %}
+						<a class="btn btn-info" href="{% url 'todo_activate' pk=todo.pk %}">
+							<span class="glyphicon glyphicon-ok"></span>
+						</a>
+						{% endif %}
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	{% else %}
+		<div class="jumbotron">
+			<h1>No Todo's yet.</h1>
+			<a type="button" class="btn btn-primary" href="{% url 'todo_new' %}">New</a>
+		</div>
+	{% endif %}
+{% endblock %}
